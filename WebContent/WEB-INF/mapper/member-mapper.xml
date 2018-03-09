@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+
+<insert id="addJoin" parameterType="hashmap">
+
+insert into member values(#{id},#{email},#{pass},0)
+</insert> 
+
+
+	<!-- 
+		resultType 으로 컬럼명과 똑같이 field 명을 가진 객체를 설정하면, 자동으로 세팅을 해줌.
+		resultMap 을 설정하고 사용하는건, 컬럼명과 field명이 다를때 지정을 해서 설정 유도.
+		작명룰.. DB 컬럼은 복합단어를 띄게 되면 _로 구분을 해서 단어간에 의미를 부여
+		phone_no
+		자바의 필드 작명룰은 camel 임 phoneNo로 작명
+	-->
+	<select id="readAllwithShow">
+		select * from place join show on place.id = show.pid	
+	</select>
+	<select id="filterBySize" resultType="hashmap">
+		select * from place where r &lt;= #{r } and c &lt;= #{c } 	
+	</select>
+	<select id="readAllShow" resultType="hashmap">
+		select * from show
+	</select>
+	<select id="readAll" resultType="hashmap">
+		select * from place 
+	</select>
+	
+	<select id="readSomeByType" resultType="hashmap" parameterType="string">
+		select * from show where type=#{type}
+	</select>	
+	<select id="readDetail" resultType="hashmap">
+		select * from show where serial=#{serial}
+	</select>	
+	<!-- insert/update/delete sql은 result 를 설정할수 없다. -->
+	<insert id="addShow" parameterType="hashmap">
+		insert into show values(#{serial},#{type},#{title},#{pno} )
+	</insert>
+	<insert id="addOneVo" parameterType="hashmap">
+		insert into place values(#{no},#{r},#{c} )
+	</insert>
+	<update id="modifyOne">
+		update place set r=#{r}, c=#{c} where no=#{no}	
+	</update>
+	
+</mapper>
+
+
+
+
+
+
+

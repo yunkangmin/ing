@@ -3,9 +3,15 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 <mvc:annotation-driven />
 	<!-- 우선순위가 스프링이다. 스프링이 처리하고 그다음에 처리하지 못하는걸 아래로 넘김. -->
 	<mvc:default-servlet-handler />
@@ -16,8 +22,37 @@
 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 <property name="prefix" value="/WEB-INF/view/"/>
  <property name="suffix" value=".jsp"/>
-
-
-
 </bean>
+
+<!-- =================================s========================================================== -->
+		<!-- 스프링에서 만든 데이터 소스 이걸가지고 마이바티스가 작동되독록 한다. -->
+	<bean id="ds"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="oracle"></property>
+	</bean>
+
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="factory">
+		<!-- SqlSessionFactory자체는 인터페이스.SqlSessionFactoryBean는 구현을 해놓은것 데이터소스(스프링이 
+			관리하는 데이터소스를 넘겨줘야지만 트랜잭션을 관리할수 잇다.)를 넘겨준다. -->
+		<property name="dataSource" ref="ds" />
+		<property name="mapperLocations"> <!--mapper의 위치를 설정 -->
+			<list>
+		
+				<value>/WEB-INF/mapper/member-mapper.xml</value>
+				<!-- <value>/WEB-INF/mapper/*-mapper.xml</value> -->
+				<!--스프링에서는 자동으로 src경로를 안잡아 주기 때문에 classpath를 꼭 지정해야한다. 웹상에서의 위치 -->
+			</list>
+
+
+		</property>
+	</bean>
+
+	<!--SqlSessionTemplate opensessoin과 session.close()관리 이걸로 하는게 코드가 간결해진다. -->
+	<bean id="sqlTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="factory" />
+	</bean>
+<!-- =========================================================================================== -->
 </beans>
