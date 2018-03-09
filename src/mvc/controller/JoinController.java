@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import total.service.GreetService;
 
 @Controller
-public class AlphaController {
+
+public class JoinController {
 
 	@Autowired
 	GreetService greetService;
 
-	@RequestMapping({ "/index", "/" })
-	public String alpha01Handle(Model model) {
-
+	
+	
+	@RequestMapping("/join")
+	public String joinHandle(Model model) {
+		
 		model.addAttribute("ment", greetService.make());
-
-		return "index";
+		return "join";
 	}
-	
-	
 }
