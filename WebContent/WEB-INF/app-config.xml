@@ -54,5 +54,23 @@
 	<bean id="sqlTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg name="sqlSessionFactory" ref="factory" />
 	</bean>
+	
+	
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="ds"></property>
+	</bean>
+	<tx:advice id="tx" transaction-manager="txManager">
+
+		<tx:attributes>
+			<tx:method name="*" /><!--감지해야 되는 메소드 -->
+
+		</tx:attributes>
+
+	</tx:advice>
+	<aop:config><!-- -->
+
+		<aop:advisor advice-ref="tx" pointcut="within(total.service.*)" />
+	</aop:config>
 <!-- =========================================================================================== -->
 </beans>
