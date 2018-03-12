@@ -26,7 +26,8 @@ input {
 			</div>
 			<hr />
 			<div align="right" style="padding-right: 20px;">
-				<a href="/login"><span>Sign in</span></a> <span>or</span> <span
+			<c:if test="${empty logonId }">
+				<a href="/login"><span>Sign in</span></a> <span>or</span></c:if> <span
 					style="font-weight: bold">Sign up</span>
 			</div>
 			<hr />
