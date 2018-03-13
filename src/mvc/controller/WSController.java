@@ -77,10 +77,10 @@ public class WSController extends TextWebSocketHandler {
 
 		System.out.println("afterConnectionClosed.. " + session);
 
+		wsSessions.remove(session);
 		map.put("cnt",wsSessions.size());
 		map.put("info", "disconnectd "+session.getRemoteAddress().getAddress().getHostAddress());
 
-		wsSessions.remove(session);
 		for (WebSocketSession ws : wsSessions) {
 			ws.sendMessage(new TextMessage(gson.toJson(map))); // 기존 session과 다른 객체
 			// 상대방과 연결되어있는 session
