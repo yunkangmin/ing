@@ -25,7 +25,8 @@ public class JoinController {
 	@Autowired
 	GreetService greetService;
 
-
+	@Autowired
+	Map<String, List<WebSocketSession>> sessions;
 
 	
 	@RequestMapping(path = "/join", method = RequestMethod.GET)
