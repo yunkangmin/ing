@@ -73,4 +73,21 @@
 		<aop:advisor advice-ref="tx" pointcut="within(total.service.*)" />
 	</aop:config>
 <!-- =========================================================================================== -->
+<!-- mail sender setting 
+마이바티스의 dbcp처럼
+-->
+<bean class="org.springframework.mail.javamail.JavaMailSenderImpl" id="mailSender">
+
+<property name="host" value="smtp.gmail.com"></property>
+<property name="username" value="yun536200@gmail.com"></property>
+<property name="password" value="google1!"></property>
+<property name="port" value="587"></property>
+<property name="javaMailProperties" >
+<props>
+<prop key="mail.smtp.starttls.enable">true</prop>
+
+</props>
+</property>
+
+</bean>
 </beans>
