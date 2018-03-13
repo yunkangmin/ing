@@ -1,6 +1,7 @@
 package mvc.controller;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -11,15 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.google.gson.Gson;
+import org.springframework.web.socket.WebSocketSession;
 
 import total.service.GreetService;
 import total.service.JoinService;
 
 @Controller
-
 public class JoinController {
 
 	@Autowired
@@ -27,6 +25,9 @@ public class JoinController {
 	@Autowired
 	GreetService greetService;
 
+
+
+	
 	@RequestMapping(path = "/join", method = RequestMethod.GET)
 	public String joinGetHandle(Model model) {
 
@@ -56,6 +57,8 @@ public class JoinController {
 
 		else {
 			session.setAttribute("logonId", map.get("id"));
+			String sid=session.getId();
+			System.out.println(sid);
 			return "redirect:/";
 		}
 

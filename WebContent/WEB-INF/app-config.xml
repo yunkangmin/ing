@@ -93,9 +93,16 @@
 
 </bean>
 
-<!-- websocket handler -->
+<!-- websocket handler --><!-- 중간에 가로채서 추가 작업 HttpSessionHandshakeInterceptor aop느낌-->
 <websocket:handlers>
-<websocket:mapping handler="AlertController" path="/handle"/>
+<websocket:mapping handler="alertController" path="/alert"/>
+<websocket:handshake-interceptors>
+
+<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+</websocket:handshake-interceptors>
 </websocket:handlers>
+
+  
+   
 
 </beans>
