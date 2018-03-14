@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -14,6 +15,9 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.google.gson.Gson;
+
+import total.model.WebSocketMap;
+import total.service.FriendService;
 
 /*
  * ws통신을 제어할 용도의 컨트롤러
@@ -32,6 +36,10 @@ public class WSController extends TextWebSocketHandler {
 	Map<String, Object> map;
 	Gson gson;
 
+	@Autowired
+	WebSocketMap sessions;
+	@Autowired
+	FriendService friendService;
 	@PostConstruct // init-method 자동으로 등록시 어노테이션으로 등록
 	public void init() {
 		wsSessions = new LinkedHashSet<>();
@@ -43,7 +51,7 @@ public class WSController extends TextWebSocketHandler {
 	@Override // 클라이언트가 웹소켓 연결되었을때.. //자바스크립트로 연결
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		System.out.println("afterConnectionEstablished.. " + session);
-
+/*
 		// inetSocketAddress
 		// System.out.println(session.getRemoteAddress().getHostName());//상대방아이피
 		// inetaddress
@@ -60,7 +68,16 @@ public class WSController extends TextWebSocketHandler {
 			// 메시지를 보낼때 TextMessage객체를 만들엇 보낸다.
 
 		}
-
+*/
+		//=======================================================================================
+	
+		String key =(String)session.getAttributes().get("logonId");
+		friendService.addWebSocket(key, session);
+		
+		
+		
+		
+		
 	}
 
 	// 메시지 보낼때
@@ -76,7 +93,7 @@ public class WSController extends TextWebSocketHandler {
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 
 		System.out.println("afterConnectionClosed.. " + session);
-
+/*
 		wsSessions.remove(session);
 		map.put("cnt",wsSessions.size());
 		map.put("info", "disconnectd "+session.getRemoteAddress().getAddress().getHostAddress());
@@ -86,7 +103,13 @@ public class WSController extends TextWebSocketHandler {
 			// 상대방과 연결되어있는 session
 			// 메시지를 보낼때 TextMessage객체를 만들엇 보낸다.
 
-		}
+		}*/
+		
+		//============================================================================================
+	
+		String key =(String)session.getAttributes().get("logonId");
+		friendService.removeWebSocket(key, session);
+		
 
 	}
 

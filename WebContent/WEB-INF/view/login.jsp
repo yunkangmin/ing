@@ -5,6 +5,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div align="center" style="width:200px">
 <form action="${pageContext.servletContext.contextPath }/loginp" method="post"
 		style="width: 100%; text-align: left;" autocomplete="off">
 		<div style="margin-top: 15px;">
@@ -21,5 +22,6 @@
 				인</button>
 		</div>
 	</form>
+	</div>
 </body>
 </html>

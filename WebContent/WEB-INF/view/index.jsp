@@ -20,7 +20,8 @@
 	<div align="center">
 	<c:if test="${!empty logonId }">
 
-		<a href="${pageContext.servletContext.contextPath }/chatroom" style="text-decoration: none;">채팅방 개설</a>
+		<a href="${pageContext.servletContext.contextPath }/chatroom" style="text-decoration: none;">채팅방 개설</a> / 
+		<a href="${pageContext.servletContext.contextPath }/friend" style="text-decoration: none;">친구추가</a>
 
 	</c:if>
 <hr />

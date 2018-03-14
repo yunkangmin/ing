@@ -41,23 +41,28 @@ public class JoinController {
 		boolean b = false;
 		try {
 			b = joinService.join(map);
-
+			if(b) {
+				session.setAttribute("logonId", map.get("id"));
+			/*	
+				List<WebSocketSession> s=sessions.get(session.getId());
+				for(WebSocketSession ws:s) {
+					ws.sendMessage(new TextMessage(""));
+				}
+				*/
+				String sid=session.getId();
+				System.out.println(sid);
+				return "redirect:/";
+			}
+			throw new Exception();
 		} catch (Exception e) {
 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-
-		if (!b) {
 			model.addAttribute("data", map);
 			model.addAttribute("err", "계정생성에서 문제가 있었습니다.");
 			return "join";
 		}
 
-		else {
-			session.setAttribute("logonId", map.get("id"));
-			return "redirect:/";
-		}
 
 	}
 
@@ -68,14 +73,16 @@ public class JoinController {
 	}
 
 	@RequestMapping(path = "/loginp")
-	public String loginpHandle(@RequestParam Map<String, String> map, HttpSession session) {
+	public String loginpHandle(@RequestParam Map<String, String> map, HttpSession session,Model model) {
 
 		Map<String, Object> result = joinService.loginp(map);
 		if (result != null) {
 			session.setAttribute("logonId", map.get("idmail"));
+			return "redirect:/";
+		} else {
+			model.addAttribute("err", "logon failed");
+			return "login";
 		}
-
-		return "index";
 
 	}
 	@RequestMapping("/chatroom")

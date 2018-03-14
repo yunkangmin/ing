@@ -1,5 +1,7 @@
 package mvc.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +16,16 @@ public class AlphaController {
 	GreetService greetService;
 
 	@RequestMapping({ "/index", "/" })
-	public String alpha01Handle(Model model) {
+	public String alpha01Handle(Model model, HttpSession session) {
+		
 
-		model.addAttribute("ment", greetService.make());
-
-		return "index";
+		if(session.getAttribute("logonId")==null) {
+			model.addAttribute("ment", greetService.make());
+			return "index";
+		}else {
+			return "logon";
+		}
+	
 	}
 	
 	

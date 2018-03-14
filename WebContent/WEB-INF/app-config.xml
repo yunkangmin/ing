@@ -95,11 +95,17 @@
 <!-- =========================================================================================== -->
 <!--WebSocket Handle config -->
 <websocket:handlers>
-<websocket:mapping handler="wsController" path="/handle"/>
+<websocket:mapping handler="wsController" path="handle"/> 
+ <websocket:handshake-interceptors> 
+
+ 
+<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/> 
+ </websocket:handshake-interceptors> 
 
 
 </websocket:handlers>
+<bean id="sessions" class="total.model.WebSocketMap"></bean>
 
-
+<bean class="com.google.gson.Gson" />
 
 </beans>
