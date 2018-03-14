@@ -1,5 +1,6 @@
 package mvc.controller;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import total.model.WebSocketMap;
 import total.service.GreetService;
 import total.service.JoinService;
 
@@ -26,8 +29,7 @@ public class JoinController {
 	GreetService greetService;
 
 	@Autowired
-	Map<String, List<WebSocketSession>> sessions;
-
+	WebSocketMap sessions;
 	
 	@RequestMapping(path = "/join", method = RequestMethod.GET)
 	public String joinGetHandle(Model model) {
@@ -43,26 +45,29 @@ public class JoinController {
 		boolean b = false;
 		try {
 			b = joinService.join(map);
-
+			if(b) {
+				session.setAttribute("logonId", map.get("id"));
+				
+				List<WebSocketSession> s=sessions.get(session.getId());
+				for(WebSocketSession ws:s) {
+					ws.sendMessage(new TextMessage(""));
+				}
+				String sid=session.getId();
+				System.out.println(sid);
+				return "redirect:/";
+			}
+			throw new Exception();
 		} catch (Exception e) {
 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-
-		if (!b) {
 			model.addAttribute("data", map);
 			model.addAttribute("err", "계정생성에서 문제가 있었습니다.");
 			return "join";
 		}
 
-		else {
-			session.setAttribute("logonId", map.get("id"));
-			String sid=session.getId();
-			System.out.println(sid);
-			return "redirect:/";
-		}
 
+		
 	}
 
 	@RequestMapping("/login")
@@ -89,9 +94,7 @@ public class JoinController {
 		int compare=((BigDecimal)result.get("LV")).intValue();
 		
 		if(0==compare){
-			
 			return "auth";
-			
 			
 		}else if(1==compare){
 			

@@ -34,14 +34,21 @@
 			<span style="font-weight: bold">Sign up</span>
 		</div>
 		<hr />
+		
 		<div style="width: 980px;">
 			<h2>Spring Project</h2>
 			<small>${ment }</small> <br /> <a
 				href="${pageContext.servletContext.contextPath }/join"
 				style="text-decoration: none;">회원가입</a>
 			<hr />
+			
 
 
+		</div>
+		<hr/>
+	<div class="alert alert-warning alert-dismissible" id="warn" style="display: none">
+			<a href="javascript:location.reload();" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong>경고!</strong> 다른 윈도우 혹은 탭에서 상태가 변경되었습니다.
 		</div>
 		<hr />
 		<div>
@@ -74,9 +81,10 @@
 
 		//메시지가 들어올때..
 		ws.onmessage = function(resp) {
-			
+			console.log(resp);
 			var obj=JSON.parse(resp.data);
-			window.alert(obj.data);
+			window.alert(obj);
+			$("#warn").show();
 
 			//console.log(resp);
 			//window.alert(obj.data);

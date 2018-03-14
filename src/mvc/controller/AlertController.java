@@ -1,18 +1,15 @@
 package mvc.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.CloseStatus;
-import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+import total.model.WebSocketMap;
 
 @Controller//디폴트가 앞에만 소문자임.
 public class AlertController extends TextWebSocketHandler {
@@ -23,8 +20,11 @@ public class AlertController extends TextWebSocketHandler {
 	 */
 
 
+	/*@Autowired
+	Map<String, List<WebSocketSession>> sessions;*/
+	
 	@Autowired
-	Map<String, List<WebSocketSession>> sessions;
+	WebSocketMap sessions;
 	
 
 	/*@PostConstruct

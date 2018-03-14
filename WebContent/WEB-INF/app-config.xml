@@ -103,7 +103,7 @@
 </websocket:handlers>
 
 <!--디폴트가 싱글톤이다.  -->
-  <bean id="map" class="java.util.HashMap"></bean>
+  <bean id="sessions" class="total.model.WebSocketMap"></bean>
    
 
 </beans>
