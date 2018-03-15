@@ -5,6 +5,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+<c:if test="${!empty err }">
+		<div class="alert alert-danger">${err }</div>
+	</c:if>
 <div align="center" style="width:200px">
 <form action="${pageContext.servletContext.contextPath }/loginp" method="post"
 		style="width: 100%; text-align: left;" autocomplete="off">

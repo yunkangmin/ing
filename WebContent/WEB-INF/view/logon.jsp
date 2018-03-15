@@ -4,16 +4,16 @@
 <html>
 <head>
 <title>SPRING - by git</title>
-<!-- Latest compiled and minified CSS -->
+ <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<!-- jQuery library -->
+jQuery library
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- Latest compiled JavaScript -->
+Latest compiled JavaScript
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
+</head> 
 <body>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -27,7 +27,7 @@
 					data-toggle="dropdown" href="#">친구관리 <span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="#">친구목록</a></li>
-						<li><a href="${pageContext.servletContext.contextPath }/friend">친구추가</a></li>
+						<li><a href="${pageContext.servletContext.contextPath }/friend/search">친구추가</a></li>
 						<li><a href="#">친구관리</a></li>
 					</ul></li>
 			</ul>

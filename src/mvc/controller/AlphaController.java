@@ -21,9 +21,10 @@ public class AlphaController {
 
 		if(session.getAttribute("logonId")==null) {
 			model.addAttribute("ment", greetService.make());
-			return "index";
+			return "t_index";//tiles에서 찾는다. 설정파일에서 타일즈를 설정했기 때문에
 		}else {
-			return "logon";
+			model.addAttribute("main","/login.jsp");
+			return "t_el";
 		}
 	
 	}

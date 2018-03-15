@@ -31,7 +31,7 @@ public class JoinController {
 	public String joinGetHandle(Model model) {
 
 		model.addAttribute("ment", greetService.make());
-		return "join";
+		return "t_join";
 	}
 
 	@RequestMapping(path = "/join", method = RequestMethod.POST)
@@ -81,7 +81,11 @@ public class JoinController {
 			return "redirect:/";
 		} else {
 			model.addAttribute("err", "logon failed");
-			return "login";
+			model.addAttribute("main", "login.jsp");
+			model.addAttribute("title", "login failed");
+			//return "login";
+		//	return "t_el";
+			return "t_el_title";
 		}
 
 	}

@@ -17,6 +17,11 @@ insert into member values(#{id},#{email},#{pass},0)
 	<select id="getByIdmailAndPassword" resultType="hashmap">
 		select * from member where (id=#{idmail} or email=#{idmail}) and password=#{pass}
 	</select>
+	
+	<select id="readSearch" resultType="hashmap">
+	
+	select * from member where id like #{s}
+	</select>
 
 	<!-- 
 		resultType 으로 컬럼명과 똑같이 field 명을 가진 객체를 설정하면, 자동으로 세팅을 해줌.
@@ -34,10 +39,7 @@ insert into member values(#{id},#{email},#{pass},0)
 	<select id="readAllShow" resultType="hashmap">
 		select * from show
 	</select>
-	<select id="readAll" resultType="hashmap">
-		select * from place 
-	</select>
-	
+
 	<select id="readSomeByType" resultType="hashmap" parameterType="string">
 		select * from show where type=#{type}
 	</select>	
